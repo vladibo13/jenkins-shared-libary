@@ -15,6 +15,11 @@ class Docker implements Serializable{
         // vladibo/demo-app:jma-1.2
     }
 
+    def buildDockerImageWithFilePath(String dockerfilePath, String contextDir, String imageName) {
+        script.echo "building the docker image with file path..."
+        script.sh "docker build -t ${imageName} -f ${dockerfilePath} ${contextDir}"
+    }
+
     def dockerLogin() {
         script.withCredentials([script.usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
             script.sh "echo '${script.PASS}' | docker login -u '${script.USER}' --password-stdin"
